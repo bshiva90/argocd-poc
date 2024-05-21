@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: foo-app # name should be same on selector and template label
+  namespace: poc
+  labels:
+    app: foo
+spec:
+  selector:
+    matchLabels:
+      app: foo-app # name should be same on template label
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: foo-app # name should be same as selector label
+    spec:
+      containers:
+      - name: foo
+        image: 'kicbase/echo-server:1.0'
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-app # name should be same on selector and template label
+  namespace: poc
+  labels:
+    app: bar
+spec:
+  selector:
+    matchLabels:
+      app: bar-app # name should be same on template label
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bar-app # name should be same as selector label
+    spec:
+      containers:
+      - name: bar
+        image: 'kicbase/echo-server:1.0'
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 8080

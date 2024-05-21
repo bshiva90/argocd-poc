@@ -1,0 +1,23 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: foo-service
+  namespace: poc
+spec:
+  type: ClusterIP
+  selector:
+    app: foo-app # name should be same from deployment label
+  ports:
+  - port: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: bar-service
+  namespace: poc
+spec:
+  type: ClusterIP
+  selector:
+    app: bar-app # name should be same from deployment label
+  ports:
+  - port: 8080

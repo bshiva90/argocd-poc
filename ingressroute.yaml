@@ -1,0 +1,27 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: app-ingress-route
+  namespace: poc
+spec:
+  entryPoints:
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`connected-city.com`) && PathPrefix(`/foo`)
+    priority: 1
+    services:
+    - kind: Service
+      name: foo-service
+      namespace: poc
+      port: 8080
+  - kind: Rule
+    match: Host(`connected-factory.com`) && PathPrefix(`/bar`)
+    priority: 2
+    services:
+    - kind: Service
+      name: bar-service
+      namespace: poc
+      port: 8080 
+  tls:
+    secretName: tls-secret-city
